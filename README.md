@@ -1,46 +1,113 @@
-# Getting Started with Create React App
+# Laravel Chamados
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é um sistema de gerenciamento de **Chamados**, onde você pode **criar**, **editar**, **visualizar** e **excluir** chamados. O sistema permite que os chamados sejam registrados com categorias e situações e oferece métricas relacionadas a esses chamados.
 
-## Available Scripts
+## Funcionalidades
 
-In the project directory, you can run:
+### CRUD para Chamados:
 
-### `npm start`
+- **Criar Chamado**: Abertura de novos chamados com categorias e descrição.
+- **Editar Chamado**: Alteração de dados do chamado, incluindo a situação e o prazo de solução.
+- **Excluir Chamado**: Remoção de chamados existentes.
+- **Visualizar Chamado**: Exibição dos chamados cadastrados.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Gerenciamento de Situação:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+O sistema permite alterar a situação dos chamados para:
 
-### `npm test`
+- **Pendente**
+- **Resolvido** (ao selecionar "Resolvido", o campo **Data de Solução** será preenchido automaticamente com a data atual).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Métricas:
 
-### `npm run build`
+Exibição de métricas relacionadas aos chamados, como total de chamados e chamados resolvidos dentro do prazo.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Requisitos
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **PHP** >= 8.3.16
+- **Laravel** >= 12.x
+- **React** >= 19.1.0
+- **Yarn**
 
-### `npm run eject`
+- **Composer** para gerenciamento de dependências
+- **Banco de dados**: PostgreSQL
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Instalação Back-End
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 1. Clone o repositório
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+git clone https://github.com/seu-usuario/nome-do-repositorio.git
+```
 
-## Learn More
+### 2. Instalar dependências
+Navegue até o diretório do projeto e execute o comando para instalar as dependências:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+cd nome-do-repositorio
+composer install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. Configurar o ambiente
+Crie o arquivo .env a partir do .env.example:
+
+```bash
+cp .env.example .env
+```
+
+Configure as variáveis do banco de dados no arquivo .env
+
+```
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=database-plss
+DB_USERNAME=admin
+DB_PASSWORD=admin
+```
+
+1 Rodar o comando para o Docker
+
+```bash
+docker compose up -d
+```
+
+2 Execute o comando para gerar a chave do aplicativo:
+
+```
+php artisan key:generate
+```
+
+3 Rodar o comando para as migrations
+
+```
+php artisan migrate
+```
+
+4 Rodar a seeder
+
+```
+php artisan db:seed --class=DatabaseSeeder
+```
+
+5 Rodar a aplicação
+```
+php artisan serve
+```
+
+## Instalação Front-end
+
+1 Rodar o comando para baixar as dependências
+```
+yarn 
+```
+
+2 Subir aplicação
+
+```
+yarn start
+```
