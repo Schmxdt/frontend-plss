@@ -64,7 +64,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const navItems = [
-  { label: 'Dashboard', path: '/', icon: <DashboardIcon /> },
+  { label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon /> },
   { label: 'Chamados', path: '/chamados', icon: <AssignmentIcon /> },
   { label: 'Situações', path: '/situacoes', icon: <InfoIcon /> },
   { label: 'Categorias', path: '/categorias', icon: <CategoryIcon /> },
