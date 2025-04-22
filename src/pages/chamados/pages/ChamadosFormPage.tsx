@@ -10,16 +10,16 @@ export default function ChamadosFormPage() {
   const { id } = useParams();
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
-  const [situacao, setSituacao] = useState<string | number>('Novo');  // Armazenando o ID da situação
-  const [categoria, setCategoria] = useState<string | number>('');  // Armazenando o ID da categoria
+  const [situacao, setSituacao] = useState<string | number>('');
+  const [categoria, setCategoria] = useState<string | number>('');
   const tableName = "chamados";
 
   const handleSituacaoChange = (event: SelectChangeEvent) => {
-    setSituacao(event.target.value);  // Armazenando o ID da situação
+    setSituacao(event.target.value);
   };
 
   const handleCategoriaChange = (event: SelectChangeEvent) => {
-    setCategoria(event.target.value);  // Armazenando o ID da categoria
+    setCategoria(event.target.value);
   };
 
   const navigate = useNavigate();
@@ -62,8 +62,8 @@ export default function ChamadosFormPage() {
           const response = await api.get(`/${tableName}/${id}`);
           setTitulo(response.data.titulo);
           setDescricao(response.data.descricao);
-          setSituacao(response.data.situacao_id);  // Usando o ID da situação
-          setCategoria(response.data.categoria_id);  // Usando o ID da categoria
+          setSituacao(response.data.situacao_id);
+          setCategoria(response.data.categoria_id);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -103,14 +103,19 @@ export default function ChamadosFormPage() {
         <Select
           labelId="situacao-select-label"
           id="situacao-select"
-          value={String(situacao)}
+          value={id ? String(situacao) : 'Novo'}
           label="Situação"
           onChange={handleSituacaoChange}
+          disabled={!id}
         >
+          {!id && (
+            <MenuItem value="Novo">Novo</MenuItem>
+          )}
+
           {situacaoOptions.map((situacaoOption) => (
-            <MenuItem key={situacaoOption.id} value={situacaoOption.id}>
-              {situacaoOption.nome}
-            </MenuItem>
+        <MenuItem key={situacaoOption.id} value={situacaoOption.id}>
+          {situacaoOption.nome}
+        </MenuItem>
           ))}
         </Select>
       </FormControl>

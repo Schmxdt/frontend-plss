@@ -17,9 +17,13 @@ export default function ChamadosPage() {
   const navigate = useNavigate();
   const tableName = "chamados";
 
-  const fetchData = async () => {
+  const fetchData = async (search: string) => {
     try {
-      const response = await api.get(`/${tableName}`);
+      const response = await api.get(`/${tableName}`, {
+        params: {
+          search, // Passando o valor da pesquisa para a API
+        },
+      });
       setRows(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -31,7 +35,7 @@ export default function ChamadosPage() {
       await api.delete(`/${tableName}/${id}`);
       setSnackbarMessage("Registro excluído com sucesso!");
       setOpenSnackbar(true);
-      fetchData();
+      fetchData(search);
     } catch (error) {
       console.error("Erro ao excluir registro:", error);
       setSnackbarMessage("Erro ao excluir o registro.");
@@ -50,7 +54,7 @@ export default function ChamadosPage() {
     try {
       setSnackbarMessage("Table refreshed successfully!");
       setOpenSnackbar(true);
-      fetchData();
+      fetchData(search);
     }
     catch (error) {
       console.error("Error refreshing table:", error);
@@ -64,6 +68,9 @@ export default function ChamadosPage() {
     { field: "descricao", headerName: "Descrição", flex: 1 },
     { field: "categoria_nome", headerName: "Categoria", flex: 1 },
     { field: "situacao_nome", headerName: "Situação", flex: 1 },
+    { field: "data_criacao", headerName: "Criação", flex: 1 },
+    { field: "prazo_solucao", headerName: "Prazo", flex: 1 },
+    { field: "data_solucao", headerName: "Solução", flex: 1 },
 
     {
       field: "actions",
@@ -93,7 +100,7 @@ export default function ChamadosPage() {
   ];
 
   useEffect(() => {
-    fetchData();
+    fetchData(search);
   }, [search]);
 
   return (
@@ -172,7 +179,7 @@ export default function ChamadosPage() {
                 variant="outlined"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && fetchData()}
+                onKeyDown={(e) => e.key === "Enter" && fetchData(search)}
               />
             </Box>
 
