@@ -21,7 +21,7 @@ export default function ChamadosPage() {
     try {
       const response = await api.get(`/${tableName}`, {
         params: {
-          search, // Passando o valor da pesquisa para a API
+          search,
         },
       });
       setRows(response.data);

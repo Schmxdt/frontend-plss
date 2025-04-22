@@ -17,9 +17,13 @@ export default function SituacoesPage() {
   const navigate = useNavigate();
   const tableName = "situacoes";
 
-  const fetchData = async () => {
+  const fetchData = async (search: string) => {
     try {
-      const response = await api.get(`/${tableName}`);
+      const response = await api.get(`/${tableName}`, {
+        params: {
+          search,
+        },
+      });
 
       setRows(
         response.data.map((item: Situacao) => ({
@@ -33,7 +37,7 @@ export default function SituacoesPage() {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(search);
   }, [search]);
 
   const handleDelete = async (id: string) => {
@@ -41,7 +45,7 @@ export default function SituacoesPage() {
       await api.delete(`/${tableName}/${id}`);
       setSnackbarMessage("Registro excluído com sucesso!");
       setOpenSnackbar(true);
-      fetchData();
+      fetchData(search);
     } catch (error) {
       console.error("Erro ao excluir registro:", error);
       setSnackbarMessage("Erro ao excluir o registro.");
@@ -60,7 +64,7 @@ export default function SituacoesPage() {
     try {
       setSnackbarMessage("Tabela atualizada com sucesso!");
       setOpenSnackbar(true);
-      fetchData();
+      fetchData(search);
     }
     catch (error) {
       console.error("Erro ao atualizar tabela.", error);
@@ -175,7 +179,7 @@ export default function SituacoesPage() {
                 variant="outlined"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && fetchData()}
+                onKeyDown={(e) => e.key === "Enter" && fetchData(search)}
               />
             </Box>
 
@@ -191,7 +195,7 @@ export default function SituacoesPage() {
               initialState={{
                 pagination: { paginationModel: { pageSize: 10, page: 0 } },
               }}
-              onRowSelectionModelChange={(row) => { 
+              onRowSelectionModelChange={(row) => {
                 const sizeRow = row.ids
                 const selectedIDs = new Set(sizeRow);
 
